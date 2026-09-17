@@ -4,6 +4,7 @@ The sampler rotates selection across multiple islands, keeps a lightweight
 archive for exploitation, and can maintain MAP-Elites-style feature maps to
 encourage broader coverage during search.
 """
+import ast
 import random
 import time
 from typing import Any, Dict, List, Optional, Set, Tuple, TYPE_CHECKING
@@ -566,7 +567,7 @@ class IslandSampler(BaseSampler):
         loaded_feature_maps = state.get("island_feature_maps", [])
         if loaded_feature_maps and len(loaded_feature_maps) == self.num_islands:
             self.island_feature_maps = [
-                {eval(k): v for k, v in feature_map.items()}
+                {ast.literal_eval(k): v for k, v in feature_map.items()}
                 for feature_map in loaded_feature_maps
             ]
         else:
